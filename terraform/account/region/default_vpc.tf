@@ -46,17 +46,6 @@ resource "aws_default_network_acl" "default" {
     rule_no    = 100
     to_port    = 0
   }
-
-  ingress {
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    icmp_code  = 0
-    icmp_type  = 0
-    protocol   = "-1" #tfsec:ignore:aws-ec2-no-excessive-port-access
-    rule_no    = 100
-    to_port    = 0
-  }
   ingress {
     action     = "deny"
     cidr_block = "0.0.0.0/0" #tfsec:ignore:aws-ec2-no-public-ingress-acl
@@ -77,7 +66,16 @@ resource "aws_default_network_acl" "default" {
     rule_no    = 130
     to_port    = 3389
   }
-
+  ingress {
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    icmp_code  = 0
+    icmp_type  = 0
+    protocol   = "-1" #tfsec:ignore:aws-ec2-no-excessive-port-access
+    rule_no    = 140
+    to_port    = 0
+  }
 }
 
 resource "aws_flow_log" "default_vpc" {
